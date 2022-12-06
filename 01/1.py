@@ -3,39 +3,25 @@
 with open("input") as data:
     instructions = data.read().strip().split(", ")
 
-NORTH = 'N'
-EAST = 'E'
-SOUTH = 'S'
-WEST = 'W'
+# N, E, S, W
+# Corresponds to index of possible x, y movements
+orientation = 0
+DX = [ 0, 1, 0, -1]
+DY = [-1, 0, 1,  0]
 LEFT = 'L'
 RIGHT = 'R'
-
-orientation_state = {
-        NORTH: {
-            LEFT: [0, -1, WEST],
-            RIGHT: [0,  1, EAST],
-            },
-        EAST: {
-            LEFT: [-1, 0, NORTH],
-            RIGHT: [1,  0, SOUTH],
-            },
-        SOUTH: {
-            LEFT: [0, 1, EAST],
-            RIGHT: [0, -1, WEST],
-            },
-        WEST: {
-            LEFT: [ 1, 0, SOUTH],
-            RIGHT: [-1, 0, NORTH],
-            },
-        }
-
-facing = NORTH
-start = pos = (0, 0)
+x = y = 0
 for move in instructions:
     direction = move[:1]
     distance = int(move[1:])
-    row, col, facing = orientation_state[facing][direction]
-    pos = (pos[0] + row * distance, pos[1] + col *distance)
 
-answer = abs(pos[0]) + abs(pos[1])
+    if direction == LEFT:
+        orientation = (orientation + 3) % 4 # move counter-clockwise: W -> S -> E -> N
+    else:
+        orientation = (orientation + 1) % 4 # move clockwise: N -> E -> S -> W
+
+    x += DX[orientation] * distance
+    y += DY[orientation] * distance
+
+answer = abs(x) + abs(y)
 print(f"{answer = }")
