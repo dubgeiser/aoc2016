@@ -27,25 +27,22 @@ part1 :: proc(moves: []string) -> int {
 	return math.abs(x) + math.abs(y)
 }
 
-// Don't know yet re. Odin generics...
-Visited_Positions :: map[[2]int]bool
-Pos :: [2]int
-
 part2 :: proc(moves: []string) -> int {
+	visited := make(map[[2]int]struct{})
+	defer delete(visited)
 	x, y := 0, 0
 	facing := 0
-	visited := &Visited_Positions{}
-	visited[{x,y}] = true
+	visited[{x, y}] = {}
 	for move in moves {
 		facing = do_turn(move[:1], facing)
 		d, _ := strconv.parse_int(move[1:])
-		for i := 0; i < d; i += 1 {
+		for i in 0 ..< d {
 			x += DX[facing]
 			y += DY[facing]
-			if visited[{x,y}] {
+			if ({x, y} in visited) {
 				return math.abs(x) + math.abs(y)
 			}
-			visited[{x, y}] = true
+			visited[{x, y}] = {}
 		}
 	}
 	assert(true == false, "We're supposed to re-visit a certain position!!")
@@ -55,7 +52,8 @@ part2 :: proc(moves: []string) -> int {
 main :: proc() {
 	data, err := os.read_entire_file(os.stdin, context.allocator)
 	if err != nil {
-		fmt.eprintfln("[%s] Did you supplied via STDIN?", err)
+		fmt.eprintfln("[%s] Did you supplied input via STDIN?", err)
+		return
 	}
 	moves := strings.split(string(data), ", ")
 	defer delete(moves)
