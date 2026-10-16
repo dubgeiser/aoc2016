@@ -1,6 +1,5 @@
 package aoc
 
-import "core:fmt"
 import "core:os"
 import "core:strings"
 
@@ -17,11 +16,11 @@ read_lines :: proc(fn: string = "") -> ([]string, os.Error) {
 			return {}, err_open
 		}
 	}
-	content, err := os.read_entire_file(f, context.allocator)
+	content, err_read := os.read_entire_file(f, context.allocator)
 	defer os.close(f)
-	if err != nil {
-		return {}, err
+	if err_read != nil {
+		return {}, err_read
 	}
-	lines := strings.split(strings.trim(string(content), "\n"), "\n")
-	return lines, nil
+	lines, err_mem := strings.split_lines(strings.trim_space(string(content)))
+	return lines, err_mem
 }
