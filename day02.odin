@@ -5,6 +5,8 @@ import "core:fmt"
 import "core:os"
 import "core:strings"
 
+import "aoc"
+
 
 DXY := map[rune][2]int {
 	'U' = {0, 1},
@@ -28,12 +30,8 @@ KEYPAD := map[[2]int]string {
 main :: proc() {
 	part1 := ""
 	defer delete(part1)
-	content, err := os.read_entire_file(os.stdin, context.allocator)
-	if err != nil {
-		fmt.eprintf("[%s] Couldn't read from stdin", err)
-		return
-	}
-	lines := strings.split(strings.trim(string(content), "\n"), "\n")
+	lines, _ := aoc.read_lines()
+	defer delete(lines)
 	curr_key := [2]int{0, 0} // Start at 5
 	for line in lines {
 		for move in line {
