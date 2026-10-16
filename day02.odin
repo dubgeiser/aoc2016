@@ -7,28 +7,20 @@ import "core:strings"
 
 import "aoc"
 
-
-DXY := map[rune][2]int {
-	'U' = {0, 1},
-	'D' = {0, -1},
-	'L' = {-1, 0},
-	'R' = {1, 0},
+// A Keypad maps a key to all its possible "outs".
+Keypad :: map[string]map[rune]string
+KEYPAD_1 := Keypad {
+	"1" = {'R' = "2", 'D' = "4"},
+	"2" = {'R' = "3", 'D' = "6", 'L' = "1"},
+	"3" = {'D' = "6", 'L' = "2"},
+	"4" = {'U' = "1", 'R' = "5"},
+	"5" = {'U' = "2", 'R' = "6", 'D' = "8", 'L' = "4"},
+	"6" = {'U' = "3", 'D' = "9", 'L' = "5"},
+	"7" = {'U' = "4", 'R' = "8"},
+	"8" = {'U' = "5", 'R' = "9", 'L' = "7"},
+	"9" = {'U' = "6", 'R' = "8"},
 }
-
-KEYPAD := map[[2]int]string {
-	{-1, 1} = "1",
-	{0, 1} = "2",
-	{1, 1} = "3",
-	{-1, 0} = "4",
-	{0, 0} = "5",
-	{1, 0} = "6",
-	{-1, -1} = "7",
-	{0, -1} = "8",
-	{1, -1} = "9",
-}
-
-// This maps the keys and their "outs"
-KEYPAD_2 := map[string]map[rune]string {
+KEYPAD_2 := Keypad {
 	"1" = {'D' = "3"},
 	"2" = {'R' = "3", 'D' = "6"},
 	"3" = {'U' = "1", 'R' = "4", 'D' = "7", 'L' = "2"},
@@ -44,19 +36,9 @@ KEYPAD_2 := map[string]map[rune]string {
 	"D" = {'U' = "B"},
 }
 
-move_p1 :: proc(pos: [2]int, move: rune) -> [2]int {
-	curr_key := pos
-	dx := DXY[move][0] + curr_key[0]
-	dy := DXY[move][1] + curr_key[1]
-	if dx >= -1 && dx <= 1 && dy >= -1 && dy <= 1 {
-		curr_key = {dx, dy}
-	}
-	return curr_key
-}
-
-move_p2 :: proc(key: string, move: rune) -> string {
-	if key in KEYPAD_2 && move in KEYPAD_2[key]{
-		return KEYPAD_2[key][move]
+do_move :: proc(keypad: Keypad, key: string, move: rune) -> string {
+	if key in keypad && move in keypad[key] {
+		return keypad[key][move]
 	}
 	return key
 }
@@ -69,16 +51,15 @@ main :: proc() {
 	lines, _ := aoc.read_lines()
 	defer delete(lines)
 
-	// Start at the "5" key
-	curr1 := [2]int{0, 0}
-	curr2 := "5"
+	// Start at key "5"
+	curr1, curr2 := "5", "5"
 
 	for line in lines {
 		for move in line {
-			curr1 = move_p1(curr1, move)
-			curr2 = move_p2(curr2, move)
+			curr1 = do_move(KEYPAD_1, curr1, move)
+			curr2 = do_move(KEYPAD_2, curr2, move)
 		}
-		part1 = strings.concatenate({part1, KEYPAD[curr1]})
+		part1 = strings.concatenate({part1, curr1})
 		part2 = strings.concatenate({part2, curr2})
 	}
 	fmt.println(part1)
