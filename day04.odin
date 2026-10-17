@@ -62,8 +62,24 @@ is_room :: proc(room: string, checksum_expected: string) -> bool {
 	return checksum_expected == string(checksum_calculated[:])
 }
 
+decrypt :: proc(room: string, id: uint) -> string {
+	decrypted := [dynamic]u8{}
+	defer delete(decrypted)
+	shift := u8(id % 26)
+	for i := 0; i < len(room); i += 1 {
+		c: u8 = room[i]
+		if 'a' <= c && c <= 'z' {
+			append(&decrypted, (c - 'a' + shift) % 26 + 'a')
+		} else {
+			append(&decrypted, ' ')
+		}
+	}
+	return string(decrypted[:])
+}
+
 main :: proc() {
 	part1 := uint(0)
+	part2 := uint(0)
 	lines, _ := aoc.read_lines()
 	defer delete(lines)
 	for line in lines {
@@ -71,6 +87,10 @@ main :: proc() {
 		if is_room(room, checksum) {
 			part1 += id
 		}
+		if decrypt(room, id) == "northpole object storage" {
+			part2 = id
+		}
 	}
 	fmt.println(part1)
+	fmt.println(part2)
 }
