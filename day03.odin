@@ -21,9 +21,7 @@ main :: proc() {
 		ns, _ := strings.split(line, " ")
 		i := 0
 		for s in ns {
-			if strings.trim_space(s) == "" {
-				continue
-			}
+			(strings.trim_space(s) != "") or_continue
 			n[i], _ = strconv.parse_int(strings.trim_space(s))
 			i += 1
 		}

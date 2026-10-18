@@ -43,12 +43,9 @@ generate_pass :: proc(prefix: string, is_part2: bool = false) -> string {
 			}
 			if is_part2 {
 				pi := u8(hex_buf[5] - u8('0'))
-				if pi > 7 || pi < 0 || pi in used {
-					continue
-				} else {
-					pass[pi] = hex_buf[6]
-					used[pi] = {}
-				}
+				(pi <= 7 && pi >= 0 && !(pi in used)) or_continue
+				pass[pi] = hex_buf[6]
+				used[pi] = {}
 			} else {
 				append(&pass, hex_buf[5])
 			}

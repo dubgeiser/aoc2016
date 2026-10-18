@@ -36,7 +36,7 @@ is_room :: proc(room: string, checksum_expected: string) -> bool {
 	frequency_map := make(map[u8]uint)
 	defer delete(frequency_map)
 	for c in room {
-		if c == '-' {continue}
+		(c != '-') or_continue
 		// Missing keys return the value's type zero value (0 for ints)
 		frequency_map[u8(c)] += 1
 	}

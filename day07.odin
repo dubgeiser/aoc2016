@@ -96,9 +96,7 @@ supports_ssl :: proc(ip: string) -> bool {
 	defer delete(hypernet)
 	for s in supernet {
 		pals, found := find_palindromes(s, 3)
-		if !found {
-			continue
-		}
+		found or_continue
 		for p in pals {
 			p_inv := string([]byte{p[1], p[0], p[1]})
 			for h in hypernet {
