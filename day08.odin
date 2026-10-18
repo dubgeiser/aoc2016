@@ -12,8 +12,12 @@ SCREEN_HEIGHT :: 6
 Screen :: [SCREEN_HEIGHT][SCREEN_WIDTH]int
 
 print_screen :: proc(screen: ^Screen) {
-	for row in screen {
-		fmt.println(row)
+	for r := 0; r < SCREEN_HEIGHT; r += 1 {
+		for c := 0; c < SCREEN_WIDTH; c += 1 {
+			c := screen[r][c] == 1 ? "#" : " "
+			fmt.printf("%s", c)
+		}
+		fmt.printf("\n")
 	}
 }
 
@@ -111,6 +115,7 @@ main :: proc() {
 		}
 	}
 	part1 = count_pixels(&screen)
-	print_screen(&screen)
 	fmt.println(part1)
+	// part 2, Read output!
+	print_screen(&screen)
 }
