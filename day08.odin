@@ -48,6 +48,8 @@ index can be done with
 
 	(`b[i] = a[(i + k) mod n]` for rotating left)
 
+See "Juggling Algorithm"
+https://www.geeksforgeeks.org/dsa/complete-guide-on-array-rotations/
 */
 rotate_row :: proc(screen: ^Screen, i, d: int) {
 	rr := [SCREEN_WIDTH]int{}
