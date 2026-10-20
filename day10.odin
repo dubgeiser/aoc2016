@@ -92,6 +92,7 @@ main :: proc() {
 	output := Out{}
 
 	q: queue.Queue(int)
+	q2: queue.Queue(int)
 	queue.init(&q)
 	defer queue.destroy(&q)
 
@@ -120,8 +121,10 @@ main :: proc() {
 		responsible, values := next_instruction(&instructions, &q, &bots, &output)
 		if values[0] == low_target && values[1] == high_target {
 			part1 = responsible
-			break
 		}
 	}
 	fmt.println(part1)
+
+	part2 := output[0]*output[1]*output[2]
+	fmt.println(part2)
 }
