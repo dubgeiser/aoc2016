@@ -20,6 +20,17 @@ main :: proc() {
 		ip = execute(ip, program[ip], &mem)
 	}
 	fmt.println(mem["a"])
+
+	// part 2
+	ip = 0
+	mem["a"] = 0
+	mem["b"] = 0
+	mem["c"] = 1
+	mem["d"] = 0
+	for ip < len(program) {
+		ip = execute(ip, program[ip], &mem)
+	}
+	fmt.println(mem["a"])
 }
 
 execute :: proc(ip: int, ins: string, mem: ^Memory) -> int {
