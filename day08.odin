@@ -4,7 +4,7 @@ import "core:fmt"
 import "core:strconv"
 import "core:strings"
 
-import "aoc"
+import input "aoc/input"
 
 SCREEN_WIDTH :: 50
 SCREEN_HEIGHT :: 6
@@ -96,7 +96,7 @@ parse_command :: proc(line, prefix, split_s: string) -> (int, int) {
 }
 
 main :: proc() {
-	lines, _ := aoc.read_lines()
+	lines, _ := input.read_lines()
 	screen := Screen{}
 	part1 := 0
 	for line in lines {

@@ -3,7 +3,7 @@ package main
 import "core:fmt"
 import "core:strings"
 
-import "aoc"
+import input "aoc/input"
 
 
 /*
@@ -112,7 +112,7 @@ supports_ssl :: proc(ip: string) -> bool {
 main :: proc() {
 	part1 := 0
 	part2 := 0
-	lines, _ := aoc.read_lines()
+	lines, _ := input.read_lines()
 	for line in lines {
 		if supports_tls(line) {
 			part1 += 1

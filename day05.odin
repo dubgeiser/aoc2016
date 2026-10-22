@@ -5,7 +5,7 @@ import "core:fmt"
 import "core:os"
 import "core:strconv"
 
-import "aoc"
+import input "aoc/input"
 
 HEX_DIGITS := "0123456789abcdef"
 
@@ -56,7 +56,7 @@ generate_pass :: proc(prefix: string, is_part2: bool = false) -> string {
 }
 
 main :: proc() {
-	lines, _ := aoc.read_lines()
+	lines, _ := input.read_lines()
 	fmt.println(generate_pass(lines[0]))
 	fmt.println(generate_pass(lines[0], true))
 }

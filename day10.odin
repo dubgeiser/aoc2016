@@ -6,7 +6,7 @@ import "core:sort"
 import "core:strconv"
 import "core:strings"
 
-import "aoc"
+import input "aoc/input"
 
 Bot :: [dynamic]int
 
@@ -96,7 +96,7 @@ main :: proc() {
 	queue.init(&q)
 	defer queue.destroy(&q)
 
-	lines := aoc.read_lines() or_else []string{}
+	lines := input.read_lines() or_else []string{}
 	for line in lines {
 		if strings.starts_with(line, "v") {
 			bot_id, val := parse_bot_init(line)

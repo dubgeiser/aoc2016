@@ -1,6 +1,6 @@
 package main
 
-import "aoc"
+import input "aoc/input"
 import "core:fmt"
 import "core:strconv"
 import "core:strings"
@@ -14,7 +14,7 @@ main :: proc() {
 	mem["c"] = 0
 	mem["d"] = 0
 	defer delete(mem)
-	program := aoc.read_lines() or_else []string{""}
+	program := input.read_lines() or_else []string{""}
 	ip := 0
 	for ip < len(program) {
 		ip = execute(ip, program[ip], &mem)
@@ -22,6 +22,7 @@ main :: proc() {
 	fmt.println(mem["a"])
 
 	// part 2
+	// This actually takes a couple of seconds :thinkingface:
 	ip = 0
 	mem["a"] = 0
 	mem["b"] = 0

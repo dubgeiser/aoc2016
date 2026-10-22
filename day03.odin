@@ -1,6 +1,6 @@
 package main
 
-import "aoc"
+import input "aoc/input"
 import "core:fmt"
 import "core:strconv"
 import "core:strings"
@@ -15,7 +15,7 @@ is_triangle :: proc(sides: [3]int) -> bool {
 
 main :: proc() {
 	triangles: [dynamic][3]int
-	lines, _ := aoc.read_lines()
+	lines, _ := input.read_lines()
 	for line in lines {
 		n: [3]int
 		ns, _ := strings.split(line, " ")

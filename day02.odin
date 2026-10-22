@@ -5,7 +5,7 @@ import "core:fmt"
 import "core:os"
 import "core:strings"
 
-import "aoc"
+import input "aoc/input"
 
 // A Keypad maps a key to all its possible "outs".
 Keypad :: map[string]map[rune]string
@@ -48,7 +48,7 @@ main :: proc() {
 	part2 := ""
 	defer delete(part1)
 	defer delete(part2)
-	lines, _ := aoc.read_lines()
+	lines, _ := input.read_lines()
 	defer delete(lines)
 
 	// Start at key "5"

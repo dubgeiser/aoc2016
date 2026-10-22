@@ -6,7 +6,7 @@ import "core:sort"
 import "core:strconv"
 import "core:strings"
 
-import "aoc"
+import input "aoc/input"
 
 parse_id_checksum :: proc(s: string) -> (uint, string) {
 	// regexes ¯\_(ツ)_/¯
@@ -80,7 +80,7 @@ decrypt :: proc(room: string, id: uint) -> string {
 main :: proc() {
 	part1 := uint(0)
 	part2 := uint(0)
-	lines, _ := aoc.read_lines()
+	lines, _ := input.read_lines()
 	defer delete(lines)
 	for line in lines {
 		room, id, checksum := parse_line(line)

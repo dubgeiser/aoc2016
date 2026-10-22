@@ -2,7 +2,7 @@ package main
 
 import "core:fmt"
 
-import "aoc"
+import input "aoc/input"
 
 Frequency_Map :: map[u8]int
 
@@ -24,7 +24,7 @@ least_most_occurring_letters :: proc(freqmap: Frequency_Map) -> (u8, u8) {
 
 main :: proc() {
 	part1 := 0
-	lines, _ := aoc.read_lines()
+	lines, _ := input.read_lines()
 	R, C := len(lines), len(lines[0])
 	cmax := make([dynamic]u8, C, C)
 	defer delete(cmax)

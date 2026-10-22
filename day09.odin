@@ -1,6 +1,6 @@
 package main
 
-import "aoc"
+import input "aoc/input"
 import "core:fmt"
 import "core:strconv"
 import "core:strings"
@@ -40,7 +40,7 @@ len_decompressed :: proc(input: ^string, we_must_recurse: bool = false) -> int {
 }
 
 main :: proc() {
-	lines := aoc.read_lines() or_else []string{""}
+	lines := input.read_lines() or_else []string{""}
 	part1 := len_decompressed(&lines[0])
 	part2 := len_decompressed(&lines[0], true)
 	fmt.println(part1)
