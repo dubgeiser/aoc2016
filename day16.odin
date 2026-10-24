@@ -16,6 +16,14 @@ main :: proc() {
 	b := strings.builder_make()
 	defer strings.builder_destroy(&b)
 
+	// part 1
+	state = reverse_and_toggle(state, &b, size)
+	fmt.println(checksum(state[:size], &b))
+
+	// part 2
+	state = lines[1]
+	size = 35651584
+	strings.builder_reset(&b)
 	state = reverse_and_toggle(state, &b, size)
 	fmt.println(checksum(state[:size], &b))
 }
