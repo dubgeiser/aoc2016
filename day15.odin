@@ -23,16 +23,21 @@ main :: proc() {
 		nr += 1
 	}
 
+	// Part 1
 	t := 0
 	for t < 1_000_000 {
-		zero_count := 0
-		for &disc in discs {
-			pos := (disc[POS] + disc[NR] + t) % disc[LEN]
-			if pos == 0 {
-				zero_count += 1
-			}
+		if push(t, discs[:]) {
+			fmt.println(t)
+			break
 		}
-		if zero_count == len(discs) {
+		t += 1
+	}
+
+	// Part 2
+	append(&discs, Disc_Info{len(discs) + 1, 11, 0})
+	t = 0
+	for t < 1_000_000_000 {
+		if push(t, discs[:]) {
 			fmt.println(t)
 			break
 		}
@@ -47,4 +52,15 @@ parse_disc :: proc(nr: int, line: string) -> Disc_Info {
 	len := strconv.parse_int(parts[3]) or_else 0
 	start := strconv.parse_int(parts[11][:1]) or_else 0
 	return Disc_Info{nr, len, start}
+}
+
+push :: proc(t: int, discs: []Disc_Info) -> bool {
+		zero_count := 0
+		for &disc in discs {
+			pos := (disc[POS] + disc[NR] + t) % disc[LEN]
+			if pos == 0 {
+				zero_count += 1
+			}
+		}
+		return zero_count == len(discs)
 }
