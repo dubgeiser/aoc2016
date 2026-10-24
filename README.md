@@ -38,3 +38,8 @@ I presented the puzzle to an AI, asking to just name related algorithms, it pres
 In [68212a3] I noted that the puzzle felt like gcd and some system of equations or something, seems that my hunch was at least somewhat in the right directions, since coprime means that 2 numbers share no common factor, their GCD = 1 _and_ 2 prime numbers are always coprime.
 
   - [ ] Investigate CRT, Chinese Remainder Theorem
+
+## Day 16
+Implemented straight forward, using `strings.Builder` seemed efficient enough, still, there's probably a way faster method/algorithm to solve this.
+  - [ ] Check for repetitions in the strings, might be a shortcut
+  - [ ] Might be there's a faster algorithm
