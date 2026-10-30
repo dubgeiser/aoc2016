@@ -19,7 +19,7 @@ is_palindrome :: proc(s: string, l: int = 4) -> bool {
 find_palindromes :: proc(s: string, l: int) -> ([]string, bool) {
 	palindromes := make([dynamic]string)
 	found := false
-	for i := 0; i < len(s) - (l - 1); i += 1 {
+	for i in 0 ..< len(s) - (l - 1) {
 		sub_s, _ := strings.substring(s, i, i + l)
 		if sub_s[0] != sub_s[1] && sub_s == strings.reverse(sub_s) {
 			append(&palindromes, sub_s)
@@ -33,7 +33,7 @@ extract_networks :: proc(ip: string) -> ([dynamic]string, [dynamic]string) {
 	supernet := [dynamic]string{}
 	hypernet := [dynamic]string{}
 	parts := strings.split(ip, "[")
-	for i := 0; i < len(parts); i += 1 {
+	for i in 0 ..< len(parts) {
 		if strings.index(parts[i], "]") > -1 {
 			sparts := strings.split(parts[i], "]")
 			append(&hypernet, sparts[0])

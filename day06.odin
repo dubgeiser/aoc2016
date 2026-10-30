@@ -30,9 +30,9 @@ main :: proc() {
 	defer delete(cmax)
 	cmin := make([dynamic]u8, C, C)
 	defer delete(cmin)
-	for c := 0; c < C; c += 1 {
+	for c in 0 ..< C {
 		freqmap := make(Frequency_Map, context.allocator)
-		for r := 0; r < R; r += 1 {
+		for r in 0 ..< R {
 			freqmap[lines[r][c]] += 1
 		}
 		cmin[c], cmax[c] = least_most_occurring_letters(freqmap)

@@ -12,8 +12,8 @@ SCREEN_HEIGHT :: 6
 Screen :: [SCREEN_HEIGHT][SCREEN_WIDTH]int
 
 print_screen :: proc(screen: ^Screen) {
-	for r := 0; r < SCREEN_HEIGHT; r += 1 {
-		for c := 0; c < SCREEN_WIDTH; c += 1 {
+	for r in 0 ..< SCREEN_HEIGHT {
+		for c in 0 ..< SCREEN_WIDTH {
 			c := screen[r][c] == 1 ? "#" : " "
 			fmt.printf("%s", c)
 		}
@@ -26,8 +26,8 @@ print_screen :: proc(screen: ^Screen) {
 screen which is A wide and B tall.
 */
 rect :: proc(screen: ^Screen, w, h: int) {
-	for r := 0; r < h; r += 1 {
-		for c := 0; c < w; c += 1 {
+	for r in 0 ..< h {
+		for c in 0 ..< w {
 			screen[r][c] = 1
 		}
 	}
@@ -53,7 +53,7 @@ https://www.geeksforgeeks.org/dsa/complete-guide-on-array-rotations/
 */
 rotate_row :: proc(screen: ^Screen, i, d: int) {
 	rr := [SCREEN_WIDTH]int{}
-	for c := 0; c < SCREEN_WIDTH; c += 1 {
+	for c in 0 ..< SCREEN_WIDTH {
 		rr[(c + d) % SCREEN_WIDTH] = screen[i][c]
 	}
 	screen[i] = rr
@@ -69,19 +69,19 @@ See `rotate_row` proc for explanation.
 */
 rotate_col :: proc(screen: ^Screen, i, d: int) {
 	cc := [SCREEN_HEIGHT]int{}
-	for r := 0; r < SCREEN_HEIGHT; r += 1 {
+	for r in 0 ..< SCREEN_HEIGHT {
 		cc[(r + d) % SCREEN_HEIGHT] = screen[r][i]
 	}
 	// Cannot simply assign a column, so set elements one by one
-	for r := 0; r < SCREEN_HEIGHT; r += 1 {
+	for r in 0 ..< SCREEN_HEIGHT {
 		screen[r][i] = cc[r]
 	}
 }
 
 count_pixels :: proc(screen: ^Screen) -> int {
 	count := 0
-	for r := 0; r < SCREEN_HEIGHT; r += 1 {
-		for c := 0; c < SCREEN_WIDTH; c += 1 {
+	for r in 0 ..< SCREEN_HEIGHT {
+		for c in 0 ..< SCREEN_WIDTH {
 			count += screen[r][c]
 		}
 	}

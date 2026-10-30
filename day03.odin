@@ -37,7 +37,7 @@ main :: proc() {
 	fmt.println(part1)
 
 	part2 := 0
-	for x := 0; x < 3; x += 1 {
+	for x in 0 ..< 3 {
 		for y := 0; y < len(triangles) - 2; y += 3 {
 			n := [3]int{triangles[y][x], triangles[y + 1][x], triangles[y + 2][x]}
 			if is_triangle(n) {

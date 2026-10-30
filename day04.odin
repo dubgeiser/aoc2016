@@ -66,7 +66,7 @@ decrypt :: proc(room: string, id: uint) -> string {
 	decrypted := [dynamic]u8{}
 	defer delete(decrypted)
 	shift := u8(id % 26)
-	for i := 0; i < len(room); i += 1 {
+	for i in 0..<len(room) {
 		c: u8 = room[i]
 		if 'a' <= c && c <= 'z' {
 			append(&decrypted, (c - 'a' + shift) % 26 + 'a')
