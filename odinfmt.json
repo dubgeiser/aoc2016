@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/DanielGavin/ols/master/misc/odinfmt.schema.json",
-  "align_columns": true,
+  "align_comments": true,
   "align_struct_fields": true,
   "align_struct_values": true,
   "brace_style": "_1TBS",
