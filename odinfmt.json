@@ -4,7 +4,7 @@
   "align_struct_fields": true,
   "align_struct_values": true,
   "brace_style": "_1TBS",
-  "character_width": 96,
+  "character_width": 80,
   "multiline_composite_literals": true,
   "newline_limit" : 1,
   "newline_style": "LF",
