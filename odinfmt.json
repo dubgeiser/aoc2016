@@ -10,7 +10,7 @@
   "newline_style": "LF",
   "preserve_struct_blank_lines": true,
   "sort_imports": true,
-  "space_single_line_blocks": true,
+  "space_single_line_blocks": false,
   "spaces_around_colons": false,
   "tabs": true,
   "tabs_width": 4
