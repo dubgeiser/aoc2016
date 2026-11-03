@@ -28,10 +28,15 @@ main :: proc() {
 	visited := make(map[Pos]struct{})
 	defer delete(visited)
 	visited[start] = {}
+	max_steps_reached := false
 	for queue.len(q) > 0 {
 		curr := queue.dequeue(&q)
+		if !max_steps_reached && curr.steps >= 50 {
+			fmt.println("Part 2:", len(visited))
+			max_steps_reached = true
+		}
 		if curr.pos == target {
-			fmt.println(curr.steps)
+			fmt.println("Part 1:", curr.steps)
 			break
 		}
 		nbs := neighbors(curr.pos, secret)
@@ -40,6 +45,7 @@ main :: proc() {
 			visited[nb] = {}
 			queue.enqueue(&q, Pos_Q{nb, curr.steps + 1})
 		}
+		delete(nbs)
 	}
 }
 
