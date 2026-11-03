@@ -7,7 +7,7 @@ import "core:fmt"
 // Made a fixed length array for easy comparison, but it's tied to the puzzle
 // input size, so this needs to be changed when start State is different.
 // ATM I cannot run sample/input easily next to each other.
-State :: [10]int
+State :: [14]int
 
 // This data structure will be put on the queue, it takes the floor we're going
 // to into account and the number of moves that was needed to get there.
@@ -39,8 +39,8 @@ main :: proc() {
 	// start := State{1, 0, 2, 0}
 	// end := State{3, 3, 3, 3}
 
-	// Puzzle input
-	// ------------
+	// Part1 input
+	// -----------
 	// The first floor contains a strontium generator, a strontium-compatible
 	// 	microchip, a plutonium generator, and a plutonium-compatible microchip.
 	// The second floor contains a thulium generator, a ruthenium generator, a
@@ -48,8 +48,18 @@ main :: proc() {
 	// 	curium-compatible microchip.
 	// The third floor contains a thulium-compatible microchip.
 	// The fourth floor contains nothing relevant.
-	start := State{0, 0, 0, 0, 1, 2, 1, 1, 1, 1}
-	end := State{3, 3, 3, 3, 3, 3, 3, 3, 3, 3}
+	// start := State{0, 0, 0, 0, 1, 2, 1, 1, 1, 1}
+	// end := State{3, 3, 3, 3, 3, 3, 3, 3, 3, 3}
+
+	// Part2 input
+	// -----------
+	// Addition elements on the first floor:
+	//   - An elerium generator.
+	//   - An elerium-compatible microchip.
+	//   - A dilithium generator.
+	//   - A dilithium-compatible microchip.
+	start := State{0, 0, 0, 0, 1, 2, 1, 1, 1, 1, 0, 0, 0, 0}
+	end := State{3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}
 
 	q: queue.Queue(Queue_Entry)
 	queue.init(&q)
