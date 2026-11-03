@@ -14,7 +14,7 @@ Screen :: [SCREEN_HEIGHT][SCREEN_WIDTH]int
 print_screen :: proc(screen: ^Screen) {
 	for r in 0 ..< SCREEN_HEIGHT {
 		for c in 0 ..< SCREEN_WIDTH {
-			c := screen[r][c] == 1 ? "#" : " "
+			c := screen[r][c] == 1 ? "█" : " "
 			fmt.printf("%s", c)
 		}
 		fmt.printf("\n")
