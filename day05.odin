@@ -5,9 +5,8 @@ import "core:fmt"
 import "core:os"
 import "core:strconv"
 
+import hexd "aoc/digest"
 import input "aoc/input"
-
-HEX_DIGITS := "0123456789abcdef"
 
 generate_pass :: proc(prefix: string, is_part2: bool = false) -> string {
 	// Buffer for storing the hash to try.
@@ -16,8 +15,8 @@ generate_pass :: proc(prefix: string, is_part2: bool = false) -> string {
 	candidate_buf := make([]u8, len(prefix) + 21)
 	defer delete(candidate_buf)
 	copy(candidate_buf[:len(prefix)], transmute([]u8)prefix)
-	// Store result of `hash_string_to_buffer`
-	digest: [16]u8
+	// Store result of `hash_string_to_buffer`, which need a known length
+	digest := make(hexd.Digest, 16)
 	// Buffer for storing the found hexadecimal hash.
 	// This will avoid allocating a new string for the digests.
 	hex_buf: [32]u8
@@ -33,14 +32,15 @@ generate_pass :: proc(prefix: string, is_part2: bool = false) -> string {
 	for i: u64 = 0; count < 8; i += 1 {
 		suffix := strconv.write_uint(candidate_buf[len(prefix):], i, 10)
 		candidate := string(candidate_buf[:len(prefix) + len(suffix)])
-		hash.hash_string_to_buffer(hash.Algorithm.Insecure_MD5, candidate, digest[:])
+		hash.hash_string_to_buffer(
+			hash.Algorithm.Insecure_MD5,
+			candidate,
+			digest,
+		)
 
 		// 5 leading hex 0's means first 20bits are 0
 		if digest[0] == 0 && digest[1] == 0 && (digest[2] & 0xf0) == 0 {
-			for b, j in digest {
-				hex_buf[j * 2] = HEX_DIGITS[int(b >> 4)]
-				hex_buf[j * 2 + 1] = HEX_DIGITS[int(b & 0x0f)]
-			}
+			hexd.copy_to_hex_digest(digest, &hex_buf)
 			if is_part2 {
 				pi := u8(hex_buf[5] - u8('0'))
 				(pi <= 7 && pi >= 0 && !(pi in used)) or_continue
