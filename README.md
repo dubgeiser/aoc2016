@@ -19,9 +19,14 @@ Juggling byte buffers around and doing bit arithmetic sped up the execution
 time, but it still comes in at around 20s.
   - [ ] Optimize
   - [ ] Use threads
+  - [ ] Memoization?
 
 ## Day 12
   - [ ] Optimize, 5s for both parts seems slow
+
+## Day 14
+Pure brute force again, adding memoization when working on part2 sped things up, but not by orders of magnitude.
+This might be worth investigating in day 5 though
 
 ## Day 15
 There's a simpler, or more efficient way at least, to solve this, probably.
