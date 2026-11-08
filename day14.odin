@@ -4,53 +4,95 @@ import "core:crypto/hash"
 import "core:fmt"
 import "core:strings"
 
+import hd "aoc/digest"
 import "aoc/input"
 
 Hex_Digest :: [32]u8
-
-HEX_DIGITS := "0123456789abcdef"
+CACHE: map[string][]u8
+MD5 :: hash.Algorithm.Insecure_MD5
 
 main :: proc() {
 	salt := input.read_one_string() or_else ""
-	index := 0
+	index := -1
 	hex_digest: Hex_Digest
 	key_count := 0
-	for key_count < 64 {
-		hex_digest_create(salt, index, &hex_digest)
-		triplet_char := find_n_repeats_of(hex_digest, 3)
+	CACHE = make(map[string][]byte)
+	defer delete(CACHE)
 
-		if triplet_char != 0 {
-			for i in 1 ..= 1000 {
-				hex_digest_create(salt, index + i, &hex_digest)
-				quintet_char := find_n_repeats_of(hex_digest, 5, triplet_char)
-				if quintet_char != 0 {
-					key_count += 1
-					break
-				}
-			}
-		}
+	// --[ Part 1
+	for key_count < 64 {
 		index += 1
+		if is_key(salt, index, &hex_digest, 0) do key_count += 1
 	}
-	// -1 because index will be incremented also when key_count is already 64!
-	fmt.println(index-1)
+	fmt.println(index)
+
+	// --[ Part 2
+	index = -1
+	key_count = 0
+	for key_count < 64 {
+		index += 1
+		if is_key(salt, index, &hex_digest, 2016) do key_count += 1
+	}
+	fmt.println(index)
 }
 
-hex_digest_create :: proc(salt: string, index: int, buf: ^Hex_Digest) {
-	digest := hash.hash_string(
-		hash.Algorithm.Insecure_MD5,
-		strings.concatenate({salt, fmt.tprint(index)}),
-	)
-	defer delete(digest)
-	for b, i in digest {
-		buf[i * 2] = HEX_DIGITS[int(b >> 4)]
-		buf[i * 2 + 1] = HEX_DIGITS[int(b & 0x0f)]
+is_key :: proc(
+	salt: string,
+	index: int,
+	hex_digest: ^Hex_Digest,
+	stretch: int,
+) -> bool {
+
+	hex_digest_create(salt, index, hex_digest, stretch)
+	triplet_char := find_n_repeats_of(hex_digest, 3)
+
+	if triplet_char != 0 {
+		for i in 1 ..= 1000 {
+			hex_digest_create(salt, index + i, hex_digest, stretch)
+			quintet_char := find_n_repeats_of(hex_digest, 5, triplet_char)
+			if quintet_char != 0 {
+				return true
+			}
+		}
 	}
+	return false
+}
+
+hex_digest_create :: proc(
+	salt: string,
+	index: int,
+	hex_digest: ^Hex_Digest,
+	stretch: int,
+) {
+	seed := strings.concatenate({salt, fmt.tprint(index)})
+	cache_key := strings.concatenate({seed, fmt.tprint(stretch)})
+
+	if cache_key in CACHE {
+		hd.copy_to_hex_digest(CACHE[cache_key], hex_digest)
+		return
+	}
+
+	// Store first hash (of salt + index) as stretch 0, so cache check above
+	// can find it.
+	digest := hash.hash_string(MD5, seed)
+	CACHE[strings.concatenate({seed, fmt.tprint(0)})] = digest
+	hd.copy_to_hex_digest(digest, hex_digest)
+
+	for i in 1 ..= stretch {
+		digest = hash.hash_string(MD5, string(hex_digest^[:]))
+		hd.copy_to_hex_digest(digest, hex_digest)
+	}
+	CACHE[cache_key] = digest
 }
 
 // Find the first occurrence where char repeats itself n times.
 // If no char is given, search for the first char that repeats n times.
 // Return the found char, or `0` if nothing found.
-find_n_repeats_of :: proc(hex_digest: Hex_Digest, n: int, char: u8 = 0) -> u8 {
+find_n_repeats_of :: proc(
+	hex_digest: ^Hex_Digest,
+	n: int,
+	char: u8 = 0,
+) -> u8 {
 	found: bool
 	for i in 0 ..= len(hex_digest) - n {
 		if char != 0 && char != hex_digest[i] do continue

@@ -26,6 +26,9 @@ time, but it still comes in at around 20s.
 
 ## Day 14
 Pure brute force again, adding memoization when working on part2 sped things up, but not by orders of magnitude.
+The memoization, although I had some brainfarts getting the caching a bit right, _did_ help tremendously in part 2!
+The whole day14 ran in about 30 seconds :seenoevil:
+
 This might be worth investigating in day 5 though
 
 ## Day 15
