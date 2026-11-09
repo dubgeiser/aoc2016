@@ -1,5 +1,10 @@
 # Advent of Code 2016
 Noob learning Odin
+There's a lot less input parsing than I have seen in other (later) AoC's, which doesn't sit well with the way I usually solve puzzles, switching between sample and real input.
+Nothing too bad or anything, but it requires more editing some variable than I'd like to.
+
+There's a bunch of MD5 hashing puzzles, still wondering if this is a hint... MD5 was deemed unsafe, so I'm still thinking there might be some way of exploiting that, since all the MD5 related puzzles come in at more than half a minute run time.
+For sure, I'm certainly to blame too for not writing the optimal solutions, but still...
 
 ## TODO
   - [ ] Put `dayxx.odin` into its own folder `dayxx/dayxx.odin`, or `dayxx/main.odin`, just to shut up effing `ols` that doesn't seem to be able to handle single file programs?
@@ -11,7 +16,7 @@ While this is certainly okay for most, probably all, AoC puzzles, be aware, as
 this can chop part of letters, leading to text corruption.
 
 ## Day 04
-Feels like way too much code, iterations, ... 
+Feels like way too much code, iterations, ...
   - [ ] Reduce looping, optimize
 
 ## Day 05
