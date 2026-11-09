@@ -18,6 +18,17 @@ main :: proc() {
 	defer ba.destroy(row)
 	for i in 0 ..< len(start_row) do ba.set(row, i, start_row[i] == '^' ? TRAP : SAFE)
 	total := popcount(row)
+	for i in 1 ..< 40 {
+		row = next_row(row)
+		total += popcount(row)
+	}
+	fmt.println(total)
+
+
+	// Part 2
+	// 20000795
+	for i in 0 ..< len(start_row) do ba.set(row, i, start_row[i] == '^' ? TRAP : SAFE)
+	total = popcount(row)
 	for i in 1 ..< 400000 {
 		row = next_row(row)
 		total += popcount(row)
