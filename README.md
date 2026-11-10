@@ -59,3 +59,79 @@ In [68212a3] I noted that the puzzle felt like gcd and some system of equations 
 Implemented straight forward, using `strings.Builder` seemed efficient enough, still, there's probably a way faster method/algorithm to solve this.
   - [ ] Check for repetitions in the strings, might be a shortcut
   - [ ] Might be there's a faster algorithm
+
+## Day 19
+After solving part 1, I wrote a function that generates the outcomes (`x`) for `n` number of elves.
+It's a sequence that does `+2` until it reaches a power of `2`, then it resets to `1`.
+
+|n|x|
+|-:|-:|
+| 1 | 1 |
+| 2 | 1 |
+| 3 | 3 |
+| 4 | **1**|
+| 5 | 3 |
+| 6 | 5 |
+| 7 | 7 |
+| 8 | **1**|
+| 9 | 3 |
+| 10 | 5 |
+| 11 | 7 |
+| 12 | 9 |
+| 13 | 11 |
+| 14 | 13 |
+| 15 | 15 |
+| 16 | **1**|
+| 17 | 3 |
+| 18 | 5 |
+| 19 | 7 |
+| 20 | 9 |
+| 21 | 11 |
+| 22 | 13 |
+| 23 | 15 |
+| 24 | 17 |
+| 25 | 19 |
+|..|..|
+| 31 | 31 |
+| 32 | **1**|
+| 33 | 3 |
+| 34 | 5 |
+| 35 | 7 |
+| 36 | 9 |
+| 37 | 11 |
+| 38 | 13 |
+| 39 | 15 |
+| 40 | 17 |
+|..|..|
+| 63 | 63 |
+| 64 | **1**|
+| 65 | 3 |
+|..|..|
+| 126 | 125 |
+| 127 | 127 |
+| 128 | **1**|
+| 129 | 3 |
+|..|..|
+| 254 | 253 |
+| 255 | 255 |
+| 256 | **1**|
+|..|..|
+| 511 | 511 |
+| 512 | **1**|
+| 513 | 3 |
+|..|..|
+| 1023 | 1023 |
+| 1024 | **1**|
+
+Threw it in the Online Encyclopedia of Integer Sequences: https://oeis.org/A006257
+"Josephus problem"... yeah, I should've investigated the title of the puzzle :facepalm:
+
+So I coded up 2 alternatives based on OEIS, one working out the sequence with logarithm, the other with some clever bit manipulation, not too scientific, but these are the numbers coming out:
+|algo|runtime|
+|:---|---:|
+|Original|70-80ms|
+|Log|800-1600μs|
+|Bits| 500-1000μs|
+
+So my solution for part 1 is about 4 orders of magnitude slower :grin:
+Doing `odin run -file day19.odin` still made it feel pretty instant though :-D

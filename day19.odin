@@ -1,7 +1,12 @@
+#+feature dynamic-literals
+
 package main
 
 import "core:container/queue"
 import "core:fmt"
+import "core:math"
+import "core:math/bits"
+import "core:time"
 
 /*
 
@@ -38,13 +43,71 @@ import "core:fmt"
 
 main :: proc() {
 	input := 3014387
-	q : queue.Queue(int)
-	queue.init(&q, input)
-	for i in 1..=input do queue.push_back(&q, i)
+	// input = 9
+	chrono: time.Stopwatch
+	solutions := map[string]proc(n: int) -> int {
+		"orig" = solve_orig,
+		"log"  = solve_log,
+		"bits" = solve_bits,
+	}
+
+	for name, fn in solutions {
+		time.stopwatch_reset(&chrono)
+		time.stopwatch_start(&chrono)
+		solution := fn(input)
+		time.stopwatch_stop(&chrono)
+		fmt.printf("%s: %d in ", name, solution)
+		fmt.println(time.stopwatch_duration(chrono))
+	}
+
+	// print_markdown_table(1024)
+
+}
+
+// This was my original solution for part 1
+solve_orig :: proc(n: int) -> int {
+	q: queue.Queue(int)
+	queue.init(&q, n)
+	for i in 1 ..= n do queue.push_back(&q, i)
 	elf := -1
 	for queue.len(q) > 0 {
 		queue.push_back(&q, queue.pop_front(&q))
 		elf = queue.pop_front(&q)
 	}
-	fmt.println(elf)
+	return elf
+}
+
+// https://oeis.org/A006257
+// Python: return 0 if n==0 else 2*(n-2**int(math.log(n, 2)))+1
+solve_log :: proc(n: int) -> int {
+	// With ints (ie. binary numbers) you can `1 << ...` for `pow()`
+	if n == 0 do return 0
+	else do return 2 * (n - (1 << uint(math.log2(f64(n))))) + 1
+}
+
+// https://oeis.org/A006257
+// Python return bool(n&(m:=1<<n.bit_length()-1))+((n&m-1)<<1) if n else 0
+solve_bits :: proc(n: int) -> int {
+	if n == 0 do return 0
+	m := 1 << uint(bits.len(uint(n)) - 1)
+	return int((n & m) != 0) + ((n & (m - 1)) << 1)
+}
+
+// Prints out a Markdown table with 2 columns:
+// n: The number of elves participating
+// x: Last elf standing
+print_markdown_table :: proc(tot: int) {
+	q: queue.Queue(int)
+	fmt.println("|n|x|")
+	fmt.println("|-:|-:|")
+	for n in 1 ..= tot {
+		queue.init(&q, n)
+		for i in 1 ..= n do queue.push_back(&q, i)
+		elf := -1
+		for queue.len(q) > 0 {
+			queue.push_back(&q, queue.pop_front(&q))
+			elf = queue.pop_front(&q)
+		}
+		fmt.println("|", n, "|", elf, "|")
+	}
 }
