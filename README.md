@@ -130,8 +130,8 @@ So I coded up 2 alternatives based on OEIS, one working out the sequence with lo
 |algo|runtime|
 |:---|---:|
 |Original|70-80ms|
-|Log|800-1600μs|
-|Bits| 500-1000μs|
+|Log|1-1.6μs|
+|Bits| 500-1000ns|
 
 So my solution for part 1 is about 4 orders of magnitude slower :grin:
 Doing `odin run -file day19.odin` still made it feel pretty instant though :-D
