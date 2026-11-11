@@ -1,5 +1,6 @@
 package main
 
+import "base:intrinsics"
 import "core:container/queue"
 import "core:fmt"
 import "core:strconv"
@@ -69,22 +70,7 @@ valid :: proc(p: Pos, secret: int) -> bool {
 	n := x * x + 3 * x + 2 * x * y + y + y * y + secret
 
 	// Find the binary representation of that sum; count the number of bits that are 1.
-	//
-
 	//     If the number of bits that are 1 is even, it's an open space.
 	//     If the number of bits that are 1 is odd, it's a wall.
-	return (popcount(n) % 2) == 0
-}
-
-// "Kernighan's population count"
-// Count the number of bits set.
-// From notes re. https://www.youtube.com/watch?v=ZRNO-ewsNcQ
-popcount :: proc(x: int) -> int {
-	count := 0
-	n := x
-	for n != 0 {
-		n = n & (n - 1)
-		count += 1
-	}
-	return count
+	return (intrinsics.count_ones(n) % 2) == 0
 }
