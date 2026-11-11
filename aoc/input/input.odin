@@ -27,6 +27,7 @@ read_one_string :: proc(fn := "") -> (string, os.Error) {
 }
 
 // Return a file handle for a given file name, or STDIN if no name given.
+@private
 file_or_stdin :: proc(fn := "") -> (^os.File, os.Error) {
 	f := os.stdin
 	err_open: os.Error
