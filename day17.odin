@@ -9,6 +9,7 @@ import "core:strings"
 WIDTH :: 4
 HEIGHT :: 4
 
+@(private="file")
 Pos :: [2]int
 Path :: string
 Queue_Item :: struct {

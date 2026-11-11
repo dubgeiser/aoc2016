@@ -7,7 +7,7 @@ There's a bunch of MD5 hashing puzzles, still wondering if this is a hint... MD5
 For sure, I'm certainly to blame too for not writing the optimal solutions, but still...
 
 ## TODO
-  - [ ] Put `dayxx.odin` into its own folder `dayxx/dayxx.odin`, or `dayxx/main.odin`, just to shut up effing `ols` that doesn't seem to be able to handle single file programs?
+  - [X] Put `dayxx.odin` into its own folder `dayxx/dayxx.odin`, or `dayxx/main.odin`, just to shut up effing `ols` that doesn't seem to be able to handle single file programs?
     > [!NOTE] This might not be necessary, if we can work around with the `private` attribute as used in `day20.odin` with the `parse_line` declaration.
 
 ## Strings
@@ -26,6 +26,10 @@ time, but it still comes in at around 20s.
   - [ ] Optimize
   - [ ] Use threads
   - [ ] Memoization?
+
+## Day 11
+Switching between sample-, part1- and part2 input is a drag
+  - [ ] Simplify usage; create function that takes in base input and calculates accordingly.
 
 ## Day 12
   - [ ] Optimize, 5s for both parts seems slow

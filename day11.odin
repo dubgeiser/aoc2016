@@ -87,6 +87,7 @@ main :: proc() {
 
 // Given a State and the elevator floor, generate all valid next states.
 // "At most yourself and 2 RTGs or microchips in any combination"
+@(private="file")
 neighbors :: proc(e: Queue_Entry) -> [dynamic]Queue_Entry {
 	nbs := make([dynamic]Queue_Entry)
 	ds := [2]int{-1, +1}
@@ -118,6 +119,7 @@ neighbors :: proc(e: Queue_Entry) -> [dynamic]Queue_Entry {
 // > assumed that you will follow procedure and keep chips connected to their
 // > corresponding RTG when they're in the same room, and away from other RTGs
 // > otherwise.
+@(private="file")
 valid :: proc(s: State) -> bool {
 	for i_chip := 1; i_chip < len(s); i_chip += 2 {
 		// Chip's connected to its generator, cannot be harmed
