@@ -8,6 +8,7 @@ For sure, I'm certainly to blame too for not writing the optimal solutions, but 
 
 ## TODO
   - [ ] Put `dayxx.odin` into its own folder `dayxx/dayxx.odin`, or `dayxx/main.odin`, just to shut up effing `ols` that doesn't seem to be able to handle single file programs?
+    > [!NOTE] This might not be necessary, if we can work around with the `private` attribute as used in `day20.odin` with the `parse_line` declaration.
 
 ## Strings
 You can use the slice notation for strings, example: `s[1:]` but this divides by

@@ -1,5 +1,6 @@
 package main
 
+import ba "core:container/bit_array"
 import "core:fmt"
 import "core:slice"
 import "core:sort"
@@ -45,6 +46,8 @@ Some extra range:
 h + 1 -> 9
 */
 
+MAX_IP :: 4294967295
+
 Range :: [2]int
 
 main :: proc() {
@@ -66,12 +69,27 @@ main :: proc() {
 	l, h := ranges[0][0], ranges[0][1]
 	for rr in ranges[1:] {
 		ll, hh := rr[0], rr[1]
-		if h+1 < ll do break
+		if h + 1 < ll do break
 		h = max(h, hh)
 	}
-	fmt.println(h+1)
+	fmt.println(h + 1)
+
+	// Part 2
+	// Count the free IP in the "holes" and add (MAX_IP - h) to it
+	l, h = ranges[0][0], ranges[0][1]
+	free := 0
+	for rr in ranges[1:] {
+		ll, hh := rr[0], rr[1]
+		if h + 1 < ll {
+			free += ll - h - 1
+		}
+		h = max(h, hh)
+	}
+	free += MAX_IP - h
+	fmt.println(free)
 }
 
+@(private = "file")
 parse_line :: proc(line: string) -> Range {
 	parts := strings.split(line, "-")
 	defer delete(parts)
