@@ -140,3 +140,7 @@ So I coded up 2 alternatives based on OEIS, one working out the sequence with lo
 
 So my solution for part 1 is about 4 orders of magnitude slower :grin:
 Doing `odin run -file day19.odin` still made it feel pretty instant though :-D
+
+## Day 21
+Too much trial-and-error, but part 1 is under 400ms, build included.
+Might be interesting to do this with only slices.
